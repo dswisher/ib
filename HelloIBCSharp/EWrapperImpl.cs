@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using IBApi;
+// ReSharper disable InconsistentNaming
 
 namespace HelloIBCSharp
 {
     public class EWrapperImpl : EWrapper
     {
-        private int nextOrderId;
+        private int _nextOrderId;
 
         public EWrapperImpl()
         {
@@ -75,8 +72,8 @@ namespace HelloIBCSharp
 
         public void nextValidId(int orderId)
         {
-            Console.WriteLine("Next Valid Id: " + orderId + "\n");
-            nextOrderId = orderId;
+            _nextOrderId = orderId;
+            Console.WriteLine("Next Valid Id: " + _nextOrderId + "\n");
         }
 
         public void managedAccounts(string accountsList)
@@ -155,10 +152,12 @@ namespace HelloIBCSharp
 
         public void historicalData(int reqId, string date, double open, double high, double low, double close, int volume, int count, double WAP, bool hasGaps)
         {
+            Console.WriteLine("historicalData. reqId=" + reqId + ", date=" + date + ", open=" + open + ", close=" + close + ", volume=" + volume + ", count=" + count);
         }
 
         public void historicalDataEnd(int reqId, string start, string end)
         {
+            Console.WriteLine("historicalDataEnd. reqId=" + reqId + ", start=" + start + ", end=" + end);
         }
 
         public void marketDataType(int reqId, int marketDataType)

@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using IBApi;
 
 namespace HelloIBCSharp
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             // IBs main object
             EWrapperImpl ibClient = new EWrapperImpl();
@@ -19,14 +14,31 @@ namespace HelloIBCSharp
             Console.WriteLine("Connecting to the IB gateway...");
             ibClient.ClientSocket.eConnect("127.0.0.1", 4001, 0);
 
-            // Request market data
-            Contract contract = new Contract();
-            contract.Symbol = "EUR";
-            contract.SecType = "CASH";
-            contract.Currency = "GBP";
-            contract.Exchange = "IDEALPRO";
+            // Request RT market data
+            Console.WriteLine("Requesting a real-time quote for EUR...");
+            Contract eurContract = new Contract
+            {
+                Symbol = "EUR",
+                SecType = "CASH",
+                Currency = "GBP",
+                Exchange = "IDEALPRO"
+            };
 
-            ibClient.ClientSocket.reqMktData(1, contract, "", false, null);
+            ibClient.ClientSocket.reqMktData(1, eurContract, "", true, null);
+
+            // Request some historical data
+            Console.WriteLine("Requesting historical data...");
+            Contract msftContract = new Contract
+            {
+                ConId = 0,
+                Symbol = "MSFT",
+                SecType = "STK",
+                Currency = "USD",
+                Exchange = "SMART",
+                PrimaryExch = "nasdaq"
+            };
+
+            ibClient.ClientSocket.reqHistoricalData(2, msftContract, "20151204 11:55:00", "1 W", "1 day", "TRADES", 1, 1, null);
 
             // Stay alive for a little while
             Console.WriteLine("Press any key to exit");
@@ -34,7 +46,7 @@ namespace HelloIBCSharp
 
             Console.WriteLine("Got a key!");
 
-            ibClient.ClientSocket.Close();
+            ibClient.ClientSocket.eDisconnect();
 
             Console.WriteLine("IB gateway connection closed.");
         }
