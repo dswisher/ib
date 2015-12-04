@@ -69,7 +69,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\TWS API\source\csharpclient\CSharpAPI.csproj">
+    <ProjectReference Include="C:\TWS API\source\csharpclient\CSharpAPI.csproj">
       <Project>{8ede0744-96c2-40b0-a8dc-37df79370203}</Project>
       <Name>CSharpAPI</Name>
     </ProjectReference>

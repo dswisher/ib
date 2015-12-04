@@ -18,6 +18,7 @@ namespace HelloIBCSharp
 
 
         public EClientSocket ClientSocket { get; set; }
+
         public void error(Exception e)
         {
             Console.WriteLine("Error (exception): " + e.Message);
@@ -40,10 +41,12 @@ namespace HelloIBCSharp
 
         public void tickPrice(int tickerId, int field, double price, int canAutoExecute)
         {
+            Console.WriteLine("Tick Price. Ticker ID: " + tickerId + ", Field: " + field + ", Price: " + price + ", CanAutoExecute: " + canAutoExecute);
         }
 
         public void tickSize(int tickerId, int field, int size)
         {
+            Console.WriteLine("Tick Size. Ticker ID: " + tickerId + ", Field: " + field + ", Size: " + size);
         }
 
         public void tickString(int tickerId, int field, string value)
